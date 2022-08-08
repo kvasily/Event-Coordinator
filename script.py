@@ -34,31 +34,56 @@ def guest_list():
         if i == 10:
           guests_.send("Jane, 35")
   except:
-    pass
-  return 
+    pass 
 list1= guest_list()
-
 print("")
 
-def guests_over_21(guest_list):
-  age_21 = {}
-  for guest in guest_list:
-    if guest_list[guest] >= 21:
-      age_21[guest] = guest_list[guest]
-  print(age_21, '< 21 years old')
-print()
 
-# guest_list()
-guests_over_21(guests)
+over_21 = (key for key, val in guests.items() if int(val) > 21)
 
-def table(table):
-  while True:
-    try:
-      yield (food, table, seat)
-    except:
-      pass
+def chicken():
+  food = 'Chicken'
+  table = 1
+  for i in range(5):
+    seat = i + 1
+    yield f'Menu: {food}'
+    yield f'Table: {table}'
+    yield f'Seat: {seat}'      
 
+def beef():
+  food = 'Beef'
+  table = 2
+  for i in range(5):
+    seat = i + 1
+    yield f'Menu: {food}'
+    yield f'Table: {table}'
+    yield f'Seat: {seat}'
 
+def fish():
+  food = 'Fish'
+  table = 3
+  for i in range(5):
+    seat = i + 1
+    yield f'Menu: {food}'
+    yield f'Table: {table}'
+    yield f'Seat: {seat}'
 
+def meal_assigner(guests, gen1, gen2, gen3):
+  names = list(guests.keys())
+  for i in range(5):
+    yield (names[i], next(gen1))
+  for i in range(5):
+    i += 5
+    yield (names[i], next(gen2))
+  for i in range(5):
+    i += 10
+    yield (names[i], next(gen3))
 
+meal_plans = meal_assigner(guests, chicken(), fish(), beef())
 
+try:
+  for i in range(30):
+    print(next(meal_plans))
+except:
+  pass
+            
